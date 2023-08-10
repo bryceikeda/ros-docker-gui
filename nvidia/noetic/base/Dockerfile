@@ -75,7 +75,8 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-remove-essen
 libpcap-dev \
 libopenblas-dev \
 gstreamer1.0-tools libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
-ros-noetic-desktop-full python3-rosdep python3-rosinstall-generator python3-vcstool build-essential \
+ros-noetic-desktop-full python3-catkin-tools python3-rosdep \
+python3-rosinstall-generator python3-vcstool build-essential \
 ros-noetic-socketcan-bridge \
 ros-noetic-geodesy && \
 apt-get clean && rm -rf /var/lib/apt/lists/*

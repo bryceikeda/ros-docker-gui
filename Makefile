@@ -218,3 +218,7 @@ tools_cannelloni: ## [Tools]  Create a new image that contains Cannelloni. Use i
 tools_cmake: ## [Tools]  Create a new image that contains CMake. Use it as "make tools_cmake <existing_docker_image>".
 	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-cmake tools/cmake
 	@printf "\033[92mDocker Image: $(RUN_ARGS)-cmake\033[0m\n"
+
+tools_dotfiles: 
+	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-dotfiles tools/dotfiles
+	@printf "\033[92mDocker Image: $(RUN_ARGS)-dotfiles\033[0m\n"
