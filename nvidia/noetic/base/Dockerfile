@@ -14,7 +14,7 @@ lsb-release \
 mesa-utils \
 git \
 subversion \
-nano \
+vim \
 terminator \
 xterm \
 wget \
@@ -55,7 +55,6 @@ ENV LC_ALL en_US.UTF-8
 # Install OhMyZSH
 RUN apt-get update && apt-get install -y zsh && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
-#RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 RUN chsh -s /usr/bin/zsh root
 RUN git clone https://github.com/sindresorhus/pure /root/.oh-my-zsh/custom/pure
 RUN ln -s /root/.oh-my-zsh/custom/pure/pure.zsh-theme /root/.oh-my-zsh/custom/
@@ -72,13 +71,8 @@ COPY assets/terminator_background.png /root/.config/terminator/background.png
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages \
-libpcap-dev \
-libopenblas-dev \
-gstreamer1.0-tools libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
 ros-noetic-desktop-full python3-catkin-tools python3-rosdep \
 python3-rosinstall-generator python3-vcstool build-essential \
-ros-noetic-socketcan-bridge \
-ros-noetic-geodesy && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure ROS
