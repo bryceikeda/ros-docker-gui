@@ -56,11 +56,7 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update && apt-get install -y zsh && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN chsh -s /usr/bin/zsh root
-RUN git clone https://github.com/sindresorhus/pure /root/.oh-my-zsh/custom/pure
-RUN ln -s /root/.oh-my-zsh/custom/pure/pure.zsh-theme /root/.oh-my-zsh/custom/
-RUN ln -s /root/.oh-my-zsh/custom/pure/async.zsh /root/.oh-my-zsh/custom/
-RUN sed -i -e 's/robbyrussell/refined/g' /root/.zshrc
-RUN sed -i '/plugins=(/c\plugins=(git git-flow adb pyenv tmux)' /root/.zshrc
+RUN sed -i '/plugins=(/c\plugins=(git pyenv tmux)' /root/.zshrc
 
 # Terminator Config
 RUN mkdir -p /root/.config/terminator/
@@ -72,7 +68,7 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages \
 ros-noetic-desktop-full python3-catkin-tools python3-rosdep \
-python3-rosinstall-generator python3-vcstool build-essential \
+python3-rosinstall-generator python3-vcstool build-essential && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure ROS

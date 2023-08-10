@@ -105,6 +105,32 @@ tools_cmake: ## [Tools]  Create a new image that contains CMake. Use it as "make
 	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-cmake tools/cmake
 	@printf "\033[92mDocker Image: $(RUN_ARGS)-cmake\033[0m\n"
 
-tools_dotfiles: 
+tools_dotfiles: ## [Tools]  Create a new image that contains personal dotfiles. Use it as "make tools_dotfiles <existing_docker_image>".
 	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-dotfiles tools/dotfiles
 	@printf "\033[92mDocker Image: $(RUN_ARGS)-dotfiles\033[0m\n"
+
+# ROS
+
+ros_fetch_mtc: ## [ROS]    TODO: Create a new image with the moveit_task_constructor. Use it as "make ros_fetch_mtc <existing_docker_image>"
+	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-fetch-mtc ros_modules/fetch-mtc
+	@printf "\033[92mDocker Image: $(RUN_ARGS)-fetch-mtc\033[0m\n"
+
+
+# RUN
+
+run_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_noetic_with_dotfiles"
+	docker run -it --gpus all --privileged --net=host --ipc=host \
+        -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY \
+        -v /home/bikeda/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
+        -v /home/bikeda/docker/workspace_mounts/mtc:/root/catkin_ws \
+        -v /home/bikeda/.ssh:/root/.ssh \
+        turlucode/ros-noetic:nvidia-dotfiles
+
+
+# START
+
+start_noetic_with_dotfiles: ## [START]     Start the image noetic with dotfiles. Use it as "make start_noetic_with_dotfiles"
+	docker 
+ 
+
+
