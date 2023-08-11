@@ -31,40 +31,6 @@ Support for other grahics cards will follow!
       <th align="center">OpenCV</th>
     </tr>
     <tr>
-      <td align="center">Indigo</td>
-      <td align="center">yes</td>
-      <td align="left">
-        <ul>
-          <li>CUDA 8 (cuDNN 6,7)</li>
-          <li>CUDA 10 (cuDNN 7)</li>
-          <li>CUDA 10.1 (cuDNN 7)</li>
-        </ul>
-      </td>
-      <td align="left">
-        <ul>
-          <li>OpenCV 2.x (default)</li>
-          <li>OpenCV 3.x</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">Kinetic</td>
-      <td align="center">yes</td>
-      <td align="left">
-        <ul>
-          <li>CUDA 8 (cuDNN 6)</li>
-          <li>CUDA 10 (cuDNN 7)</li>
-          <li>CUDA 10.1 (cuDNN 7)</li>
-        </ul>
-      </td>
-      <td align="left">
-        <ul>
-          <li>OpenCV 2.x (default)</li>
-          <li>OpenCV 3.x</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
       <td align="center">Melodic</td>
       <td align="center">yes</td>
       <td align="left">
