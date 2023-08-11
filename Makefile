@@ -117,14 +117,26 @@ ros_fetch_mtc: ## [ROS]    TODO: Create a new image with the moveit_task_constru
 
 
 # RUN
-
-run_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_noetic_with_dotfiles"
+run_root_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_root_noetic_with_dotfiles"
 	docker run -it --gpus all --privileged --net=host --ipc=host \
-        -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY \
-        -v /home/bikeda/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
-        -v /home/bikeda/docker/workspace_mounts/mtc:/root/catkin_ws \
+        -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$$DISPLAY \
+        -v /home/bikeda/.Xauthority:/root/.Xauthority -e XAUTHORITY=/root/.Xauthority \
+	-v /home/bikeda/docker/workspace_mounts/mtc:/root/catkin_ws \
         -v /home/bikeda/.ssh:/root/.ssh \
         turlucode/ros-noetic:nvidia-dotfiles
+
+run_local_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_local_noetic_with_dotfiles"
+	docker run -it --gpus all --privileged --net=host --ipc=host \
+        -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$$DISPLAY \
+        -v /home/bikeda/.Xauthority:/home/$$(id -un)/.Xauthority \
+	-e XAUTHORITY=/home/$$(id -un)/.Xauthority \
+	-v /home/bikeda/docker/workspace_mounts/mtc:/home/$$(id -un)/catkin_ws \
+        -v /home/bikeda/.ssh:/root/.ssh \
+        -e DOCKER_USER_NAME=$$(id -un) \
+	-e DOCKER_USER_ID=$$(id -u) \
+	-e DOCKER_USER_GROUP_NAME=$$(id -gn) \
+	-e DOCKER_USER_GROUP_ID=$$(id -g) \
+	turlucode/ros-noetic:nvidia-dotfiles
 
 
 # START
