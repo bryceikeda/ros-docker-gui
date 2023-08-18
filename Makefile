@@ -109,40 +109,30 @@ tools_dotfiles: ## [Tools]  Create a new image that contains personal dotfiles. 
 	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-dotfiles tools/dotfiles
 	@printf "\033[92mDocker Image: $(RUN_ARGS)-dotfiles\033[0m\n"
 
-# ROS
-
-ros_fetch_mtc: ## [ROS]    TODO: Create a new image with the moveit_task_constructor. Use it as "make ros_fetch_mtc <existing_docker_image>"
-	docker build --build-arg="ARG_FROM=$(RUN_ARGS)" -t $(RUN_ARGS)-fetch-mtc ros_modules/fetch-mtc
-	@printf "\033[92mDocker Image: $(RUN_ARGS)-fetch-mtc\033[0m\n"
-
-
 # RUN
-run_root_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_root_noetic_with_dotfiles"
+run_root_noetic_nvidia: ## [RUN]    Run the image noetic. Use it as "make run_root_noetic_nvidia"
 	docker run -it --gpus all --privileged --net=host --ipc=host \
         -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$$DISPLAY \
         -v /home/bikeda/.Xauthority:/root/.Xauthority -e XAUTHORITY=/root/.Xauthority \
 	-v /home/bikeda/docker/workspace_mounts/mtc:/root/catkin_ws \
         -v /home/bikeda/.ssh:/root/.ssh \
-        turlucode/ros-noetic:nvidia-dotfiles
+        turlucode/ros-noetic:nvidia
 
-run_local_noetic_with_dotfiles: ## [RUN]    Run the image noetic with dotfiles. Use it as "make run_local_noetic_with_dotfiles"
+run_local_noetic_nvidia: ## [RUN]    Run the image noetic. Use it as "make run_local_noetic_nvidia"
 	docker run -it --gpus all --privileged --net=host --ipc=host \
         -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$$DISPLAY \
         -v /home/bikeda/.Xauthority:/home/$$(id -un)/.Xauthority \
 	-e XAUTHORITY=/home/$$(id -un)/.Xauthority \
 	-v /home/bikeda/docker/workspace_mounts/mtc:/home/$$(id -un)/catkin_ws \
-        -v /home/bikeda/.ssh:/root/.ssh \
+        -v /home/bikeda/.ssh:/$$(id -un)/.ssh \
         -e DOCKER_USER_NAME=$$(id -un) \
 	-e DOCKER_USER_ID=$$(id -u) \
 	-e DOCKER_USER_GROUP_NAME=$$(id -gn) \
 	-e DOCKER_USER_GROUP_ID=$$(id -g) \
-	turlucode/ros-noetic:nvidia-dotfiles
+	turlucode/ros-noetic:nvidia
 
 
 # START
 
-start_noetic_with_dotfiles: ## [START]     Start the image noetic with dotfiles. Use it as "make start_noetic_with_dotfiles"
-	docker 
- 
-
-
+start_ros_noetic_container: ## [START]     Start the image noetic with dotfiles. Use it as "make start_ros_noetic_container"
+	docker start 7c4f

@@ -51,14 +51,19 @@ setup_env_user () {
     cp /root/.profile /home/$USER/
     cp /root/.bashrc /home/$USER/
     cp /root/.zshrc /home/$USER/
+
+    # Source local dot files
+    echo "source .zshrc_local" >> /home/$USER/.zshrc
+    echo "source .bashrc_local" >> /home/$USER/.bashrc
+
     ## Copy terminator configs
     mkdir -p /home/$USER/.config/terminator
     cp /root/.config/terminator/config /home/$USER/.config/terminator/config
     cp /root/.config/terminator/background.png /home/$USER/.config/terminator/background.png
     cp -rf /root/.oh-my-zsh /home/$USER/
-    rm -rf /home/$USER/.oh-my-zsh/custom/pure.zsh-theme /home/$USER/.oh-my-zsh/custom/async.zsh
-    ln -s /home/$USER/.oh-my-zsh/custom/pure/pure.zsh-theme /home/$USER/.oh-my-zsh/custom/
-    ln -s /home/$USER/.oh-my-zsh/custom/pure/async.zsh /home/$USER/.oh-my-zsh/custom/
+    rm -rf /home/$USER/.oh-my-zsh/custom/sky.zsh-theme /home/$USER/.oh-my-zsh/custom/sky-hostname.zsh-theme
+    ln -s /home/$USER/.oh-my-zsh/custom/sky/sky.zsh-theme /home/$USER/.oh-my-zsh/custom/
+    ln -s /home/$USER/.oh-my-zsh/custom/sky/sky-hostname.zsh-theme /home/$USER/.oh-my-zsh/custom/
     sed -i -e 's@ZSH=\"/root@ZSH=\"/home/$USER@g' /home/$USER/.zshrc
     # Copy SSH keys & fix owner
     if [ -d "/root/.ssh" ]; then
@@ -74,7 +79,7 @@ setup_env_user () {
     chown $USER_ID:$GROUP_ID /home/$USER/.zshrc
     chown -R $USER_ID:$GROUP_ID /home/$USER/.oh-my-zsh
 
-    ## This a trick to keep the evnironmental variables of root which is important!
+    ## This a trick to keep the environmental variables of root which is important!
     echo "if ! [ \"$DOCKER_USER_NAME\" = \"$(id -un)\" ]; then" >> /root/.bashrc
     echo "    cd /home/$DOCKER_USER_NAME" >> /root/.bashrc
     echo "    su $DOCKER_USER_NAME" >> /root/.bashrc
